@@ -7,6 +7,9 @@ name = "pypi"
 django = "*"
 requests = "*"
 pillow = "*"
+uwsgi = "*"
+"psycopg2" = "*"
+django-storages-azure = "==1.6.8"
 
 [dev-packages]
 
