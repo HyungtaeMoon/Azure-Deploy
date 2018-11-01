@@ -10,7 +10,10 @@ WORKDIR     /code
 COPY        app   /code/
 
 ENV         LANG c.UTF-8
-ENV         DJANGO_SETTINGS_MODULE app.settings.production
+
+ENV         BUILD_MODE              production
+ENV         DJANGO_SETTINGS_MODULE  app.settings.${BUILD_MODE}
+
 ENV         PYTHONUNBUFFERED 1
 
 COPY        ./requirements.txt  /srv/
