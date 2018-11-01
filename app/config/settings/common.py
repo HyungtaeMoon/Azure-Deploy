@@ -36,6 +36,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'plusfriend',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
