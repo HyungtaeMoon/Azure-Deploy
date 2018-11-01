@@ -1,32 +1,28 @@
-FROM        python:3.6-alpine
+FROM            python:3.6-alpine
 
-RUN         apk update && \
-            apk add python3 python3-dev \
-                    gcc musl-dev linux-headers zlib zlib-dev \
-                    freetype freetype-dev jpeg jpeg-dev \
-                    postgresql-dev
+RUN             apk update && \
+                apk add python3 python3-dev \
+                gcc musl-dev linux-headers zlib zlib-dev \
+                freetype freetype-dev jpeg jpeg-dev \
+                postgresql-dev
 
-WORKDIR     /code
-COPY        app   /code/
+WORKDIR                       /code
+COPY                        . /code/
 
-ENV         LANG c.UTF-8
+ENV LANG                    c.UTF-8
+ENV DJANGO_SETTINGS_MODULE  app.settings.prodction
+ENV PYTHONUNBUFFERED 1
 
-ENV         BUILD_MODE              production
-ENV         DJANGO_SETTINGS_MODULE  app.settings.${BUILD_MODE}
+RUN pip3 install -r requirements.txt
 
-ENV         PYTHONUNBUFFERED 1
+EXPOSE 80
 
-COPY        ./requirements.txt  /srv/
-RUN         pip3 install -r /srv/requirements.txt
-
-EXPOSE      80
-
-CMD         ["uwsgi", "--plugins", "http,python", \
-                      "--http", "0.0.0.0:80", \
-                      "--wsgi-file", "/code/app/wsgi.py", \
-                      "--master", \
-                      "--die-on-term", \
-                      "--single-interpreter", \
-                      "--harakiri", "30", \
-                      "--reload-on-rss", "512", \
-                      "--post-buffering-bufsize", "8192"]
+CMD ["uwsgi", "--plugins", "http,python", \
+              "--http", "0.0.0.0:80", \
+              "--wsgi-file", "/code/askdjango/wsgi.py", \
+              "--master", \
+              "--die-on-term", \
+              "--single-interpreter", \
+              "--harakiri", "30", \
+              "--reload-on-rss", "512", \
+              "--post-buffering-bufsize", "8192"]
