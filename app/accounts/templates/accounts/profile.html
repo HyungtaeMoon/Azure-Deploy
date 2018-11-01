@@ -1,0 +1,11 @@
+{% extends 'accounts/layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <h3>{{ user }}의 프로필</h3>
+
+        <h3>Email</h3>
+        {{ user.email|default:"&dash;" }}
+    </div>
+    <hr>
+{% endblock %}
